@@ -22,8 +22,15 @@ const matemasie = localFont({
 
 const pl = dictionaries.pl;
 
+/**
+ * Absolute base for the link preview image. The cattery's domain is made up, so use the
+ * address Vercel gives the deployment (production domain first), localhost when developing.
+ */
+const siteHost = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
+const siteUrl = siteHost ? `https://${siteHost}` : "http://localhost:3000";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://luxuriacoon.pl"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: pl.meta.title,
     template: "%s | Luxuria Coon",
