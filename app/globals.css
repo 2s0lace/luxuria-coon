@@ -346,7 +346,7 @@ body:has(.module-sheet[open]) .welcome-paw { animation-play-state: paused; }
 
 /* Mobile/tablet portrait: cat + gender toggle + title fill the first screen; the rest scrolls. */
 @media (max-width: 1023px) and (orientation: portrait) {
-  .welcome-screen { height: auto; min-height: calc(100dvh - var(--header-h)); overflow: visible; }
+  .welcome-screen { height: auto; min-height: calc(100svh - var(--header-h)); overflow: visible; }
   .welcome-layout {
     --welcome-pad: 1.25rem;
     --welcome-title-h: calc((100vw - 2 * var(--welcome-pad)) / 6.9 * 1.15);
@@ -357,9 +357,11 @@ body:has(.module-sheet[open]) .welcome-paw { animation-play-state: paused; }
     --welcome-status-h: calc(var(--welcome-status-card-h) + var(--welcome-status-gap)); /* cattery status cards under the title */
     --welcome-paw-min: 2.5rem; /* the paw trail between the status cards and the launcher */
     /* Gaps scale with the screen height so cat + toggle + title always fit on the first screen. */
-    --welcome-brand-gap: clamp(0.5rem, 2dvh, 100px); /* space between the gender toggle and the title */
-    --welcome-screen-h: calc(100dvh - var(--header-h));
-    --welcome-top: clamp(0.75rem, 4dvh, 100px); /* space above the cat */
+    --welcome-brand-gap: clamp(0.5rem, 2svh, 100px); /* space between the gender toggle and the title */
+    /* svh, not dvh: this layout scrolls, and the browser bar hiding mid-scroll would resize the
+       cat and the paw trail (the paws visibly jumped on phones). */
+    --welcome-screen-h: calc(100svh - var(--header-h));
+    --welcome-top: clamp(0.75rem, 4svh, 100px); /* space above the cat */
     --welcome-stage: min(
       calc(100vw - 2 * var(--welcome-pad)),
       48.75rem,
