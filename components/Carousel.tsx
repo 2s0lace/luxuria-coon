@@ -348,7 +348,8 @@ export default function Carousel({ slides, fill = false }: { slides: Slide[]; fi
           onPointerMove={onScrubMove}
           onPointerUp={onScrubUp}
           onPointerCancel={onScrubUp}
-          className={`${scrubVisible ? "scrub-bar " : ""}m3-interactive group relative h-12 flex-1 touch-none select-none sm:h-14 ${
+          // Bez warstwy stanu na całym torze (podświetlała prostokąt) — na najechanie reaguje uchwyt.
+          className={`${scrubVisible ? "scrub-bar " : ""}group relative h-12 flex-1 touch-none select-none rounded-m3-full outline-none focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-primary sm:h-14 ${
             scrubbing ? "cursor-grabbing" : "cursor-pointer"
           }`}
         >
