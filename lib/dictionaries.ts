@@ -144,8 +144,8 @@ export const dictionaries = tieShortWords({
         title: "Aktualności",
         body: "Miot L już jest! Freja i Odin doczekali się szóstki kociąt, a połowa z nich ma już swoich przyszłych ludzi. Marzysz o maluchu z kolejnego miotu? Zapisz się na listę oczekujących, a odezwiemy się do Ciebie osobiście, zanim ktokolwiek inny się dowie.",
         cards: [
-          { title: "Miot L", desc: "Sześć kociąt, urodzone 12 czerwca" },
-          { title: "Wystawa w Poznaniu", desc: "Odin wrócił z tytułem Best in Show" },
+          { title: "Miot L", desc: "6 kociąt, ur. 12 czerwca" },
+          { title: "Wystawa w Poznaniu", desc: "Best in Show dla Odina" },
         ],
         slides: [
           "Pierwsze dni miotu L",
@@ -158,7 +158,7 @@ export const dictionaries = tieShortWords({
         title: "Kocięta",
         body: "Kocięta wyjeżdżają od nas najwcześniej w 13. tygodniu życia. Są wtedy zaszczepione, odrobaczone, mają rodowód i wyprawkę, która pachnie domem. Wcześniej poznają u nas świat: szum odkurzacza, śmiech dzieci i to, że ludzkie ręce są bezpieczne. A po odbiorze? Zostajemy w kontakcie tak długo, jak zechcesz.",
         cards: [
-          { title: "Kocię A, kotka", desc: "Black tabby, czeka na swój dom" },
+          { title: "Kocię A, kotka", desc: "Black tabby, szuka domu" },
           { title: "Kocię B, kocur", desc: "Blue silver, już zarezerwowany" },
         ],
         slides: [
@@ -186,7 +186,7 @@ export const dictionaries = tieShortWords({
         title: "Hodowla",
         body: "Jesteśmy małą, rodzinną hodowlą, zarejestrowaną w FPL/FIFe od 2019 roku. Nie mamy klatek ani osobnych kocich pokoi. Koty mieszkają z nami, mają cały parter i zabezpieczony ogród. Miotów jest u nas niewiele, bo luksus to dla nas czas: dla każdego kota i dla każdego, kto nas odwiedza.",
         cards: [
-          { title: "Dom, nie klatki", desc: "Cały parter i ogród należą do nich" },
+          { title: "Dom, nie klatki", desc: "Cały parter i ogród są ich" },
           { title: "Rejestracja", desc: "FPL / FIFe, od 2019 roku" },
         ],
         slides: [
@@ -201,7 +201,7 @@ export const dictionaries = tieShortWords({
         body: "Maine Coon to największa rasa kotów domowych i jedna z najłagodniejszych. Wygląda jak ryś, a zachowuje się jak przytulanka: chodzi za Tobą z pokoju do pokoju, „rozmawia” cichym trelem i dorasta powoli, nawet do czwartego roku życia. To kot dla kogoś, kto szuka przyjaciela, a nie ozdoby.",
         cards: [
           { title: "Łagodny olbrzym", desc: "Dorosły kocur waży 8–12 kg" },
-          { title: "Pielęgnacja", desc: "Wystarczy szczotkowanie raz w tygodniu" },
+          { title: "Pielęgnacja", desc: "Szczotkowanie raz w tygodniu" },
         ],
         slides: [
           "Kity na uszach",
@@ -344,7 +344,7 @@ export const dictionaries = tieShortWords({
         body: "Litter L is here! Freja and Odin are the proud parents of six, and half of the kittens already have their future people. Dreaming of one from the next litter? Join the waiting list and we’ll get in touch personally, before anyone else hears about it.",
         cards: [
           { title: "Litter L", desc: "Six kittens, born 12 June" },
-          { title: "Poznań cat show", desc: "Odin came home with Best in Show" },
+          { title: "Poznań cat show", desc: "Best in Show for Odin" },
         ],
         slides: [
           "Litter L, first days",
@@ -357,7 +357,7 @@ export const dictionaries = tieShortWords({
         title: "Kittens",
         body: "Our kittens leave for their new homes at 13 weeks at the earliest. By then they’re vaccinated, dewormed and come with a pedigree and a starter kit that smells like home. Before that, they learn about the world with us: the hum of the vacuum, kids laughing and that human hands are safe. And after pick-up? We stay in touch for as long as you like.",
         cards: [
-          { title: "Kitten A, female", desc: "Black tabby, waiting for her home" },
+          { title: "Kitten A, female", desc: "Black tabby, available" },
           { title: "Kitten B, male", desc: "Blue silver, already reserved" },
         ],
         slides: [
@@ -385,7 +385,7 @@ export const dictionaries = tieShortWords({
         title: "Cattery",
         body: "We’re a small family cattery, registered with FPL/FIFe since 2019. No cages, no separate cat rooms. Our cats live with us and have the whole ground floor and a secure garden. We only have a few litters a year, because to us luxury means time: for every cat and for everyone who visits.",
         cards: [
-          { title: "A home, not cages", desc: "The ground floor and garden are theirs" },
+          { title: "A home, not cages", desc: "The house and garden are theirs" },
           { title: "Registration", desc: "FPL / FIFe, since 2019" },
         ],
         slides: [
@@ -400,7 +400,7 @@ export const dictionaries = tieShortWords({
         body: "The Maine Coon is the largest domestic cat breed, and one of the gentlest. It looks like a lynx and acts like a teddy bear: it follows you from room to room, “talks” in soft trills and takes its time growing up, up to four years. It’s a cat for someone looking for a friend, not an ornament.",
         cards: [
           { title: "Gentle giant", desc: "An adult male weighs 8–12 kg" },
-          { title: "Grooming", desc: "Brushing once a week is enough" },
+          { title: "Grooming", desc: "Brushing once a week" },
         ],
         slides: [
           "Ear tufts",

@@ -311,9 +311,10 @@ export default function Carousel({ slides, fill = false }: { slides: Slide[]; fi
                       className="select-none object-cover"
                     />
                   </div>
-                  <figcaption className="absolute inset-x-0 bottom-0 flex h-20 flex-col justify-end rounded-b-m3-md bg-scrim px-5 pb-3 text-sm font-medium text-on-surface">
-                    {slide.caption}
-                    {slide.detail && <span className="font-normal text-on-surface-variant">{slide.detail}</span>}
+                  <figcaption className="absolute inset-x-0 bottom-0 flex h-20 flex-col justify-end rounded-b-m3-md bg-scrim px-5 pb-3 text-sm font-medium text-on-surface max-[359px]:px-3 max-[359px]:text-xs">
+                    {/* Najwyżej dwie linijki: tytuł i opis, każde w jednej (dłuższe kończą się wielokropkiem). */}
+                    <span className="truncate">{slide.caption}</span>
+                    {slide.detail && <span className="truncate font-normal text-on-surface-variant">{slide.detail}</span>}
                   </figcaption>
                 </figure>
               </li>
