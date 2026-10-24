@@ -1,0 +1,1151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.cookie-button {
+  background-color: rgb(var(--md-cookie-button));
+}
+
+.cookie-button-high {
+  background-color: rgb(var(--md-cookie-button-high));
+}
+
+.cookie-button-hover:hover {
+  background-color: rgb(var(--md-cookie-button-hover));
+}
+
+.gender-selector::before {
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background-color: rgb(var(--md-primary-container));
+  content: "";
+  pointer-events: none;
+  transition:
+    transform 260ms var(--ease-standard),
+    background-color var(--motion-short) var(--ease-standard);
+}
+.gender-selector[data-selected="male"]::before {
+  transform: translateX(2.75rem);
+}
+.gender-selector-option svg {
+  transition: transform 220ms var(--ease-standard);
+}
+.gender-selector-option[aria-pressed="true"] svg {
+  transform: scale(1.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gender-selector::before,
+  .gender-selector-option svg {
+    transition: none;
+  }
+}
+
+.module-launcher {
+  gap: 0.75rem;
+  min-height: 4.25rem;
+  padding: 0.875rem;
+  transition: transform var(--motion-short) var(--ease-standard), background-color var(--motion-short) var(--ease-standard);
+}
+.module-launcher:hover { transform: translateY(-2px); }
+.module-launcher:active { transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .module-launcher { transition: none; }
+  .module-launcher:hover { transform: none; }
+}
+
+/*
+ * Module popups open over the home screen as a floating card. Like an anchored popup, the
+ * card grows out of the tapped tile (tile → card morph with a spring, in JS) and shrinks
+ * back into it on close; the home screen behind is dimmed and blurred.
+ */
+.module-sheet {
+  position: fixed;
+  inset: 0;
+  width: min(60rem, calc(100vw - 2rem));
+  max-width: none;
+  height: min(46rem, calc(100dvh - 4rem));
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+  /* drop-shadow follows the clipped surface, so the shadow morphs with the card
+     instead of popping in after the animation (box-shadow would be clipped away). */
+  filter: drop-shadow(0 4px 8px rgb(0 0 0 / 0.18)) drop-shadow(0 12px 28px rgb(0 0 0 / 0.22));
+}
+.module-sheet:not([open]) { display: none; }
+/* Kontakt to tylko trzy wiersze — mała karta dopasowana do treści zamiast pełnego okna. */
+.module-sheet[data-module="contact"] {
+  width: min(30rem, calc(100vw - 2rem));
+  height: fit-content;
+  max-height: calc(100dvh - 4rem);
+}
+.module-sheet-surface {
+  position: relative;
+  height: 100%;
+  border-radius: var(--md-shape-xl);
+  overflow: hidden;
+}
+/* Mid-morph the clip-path draws the shape, even where the tile sticks out of the card's box. */
+.module-sheet-surface[data-morphing] { overflow: visible; }
+.module-sheet::backdrop {
+  background: rgb(0 0 0 / 0.45);
+  backdrop-filter: blur(8px);
+  animation: module-sheet-scrim var(--motion-medium) var(--ease-standard);
+  transition: opacity var(--motion-medium) var(--ease-standard);
+}
+.module-sheet[data-closing="true"]::backdrop { opacity: 0; }
+@keyframes module-sheet-scrim { from { opacity: 0; } }
+
+.module-sheet-inner { display: flex; flex-direction: column; height: 100%; transform-origin: 0 0; }
+/* Copy of the tapped tile's face, riding the shape morph (see ModuleSheet). */
+.module-sheet-ghost {
+  position: absolute;
+  z-index: 1;
+  margin: 0;
+  background: transparent !important;
+  box-shadow: none;
+  visibility: visible;
+  pointer-events: none;
+  transform-origin: 0 0;
+  transition: none;
+}
+.module-sheet-header {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.25rem 0.75rem;
+}
+/* Popups never scroll: each module's content is laid out to fill exactly this space. */
+/* Section names: the body font with more presence — the brand wordmark stays the only display face. */
+.module-sheet-title {
+  font: 700 1.75rem/1.15 var(--font-albert-sans), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+@media (min-width: 768px) {
+  .module-sheet-title { font-size: 2rem; }
+}
+.module-sheet-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0.25rem 1.25rem 1.25rem;
+}
+.module-sheet-content { display: flex; flex: 1; flex-direction: column; min-height: 0; }
+.module-sheet-content > * { flex: 1; min-height: 0; }
+@media (min-width: 768px) {
+  .module-sheet-header { padding: 1.5rem 2rem 1rem; }
+  .module-sheet-body { padding: 0 2rem 2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .module-sheet::backdrop { animation: none; transition: none; }
+}
+.welcome-screen {
+  height: calc(100dvh - var(--header-h));
+  overflow: hidden;
+}
+.welcome-credit {
+  position: absolute;
+  bottom: max(0.375rem, env(safe-area-inset-bottom, 0px));
+  left: 1.25rem;
+  margin: 0;
+  font-size: 0.625rem;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  opacity: 0.75;
+}
+.welcome-socials {
+  position: absolute;
+  bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+  right: 1.25rem;
+}
+.welcome-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1rem, 3vw, 3rem);
+  width: 100%;
+  max-width: 80rem;
+  height: 100%;
+  margin-inline: auto;
+  padding: clamp(1rem, 3vh, 2.5rem) 2rem;
+}
+.welcome-art {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+}
+.welcome-art .hero-stage {
+  flex-shrink: 0;
+  width: min(92%, calc((100dvh - var(--header-h) - 12rem) * 0.85), 44rem);
+}
+.welcome-cat-controls { flex: none; margin-top: 0.75rem; }
+.welcome-cat-details {
+  position: relative;
+  flex: none;
+  width: min(76%, 24rem);
+  margin-top: -2.25rem;
+  pointer-events: none;
+}
+.welcome-cat-caption { display: block; width: 100%; height: auto; overflow: visible; transform: translateY(5px); }
+.welcome-cattery-status { margin-top: 1rem; text-align: left; }
+.welcome-status-card { padding: 0.875rem 1rem; gap: 0.25rem; }
+.welcome-status-label { font-size: 0.6875rem; line-height: 1.4; opacity: 0.8; }
+.welcome-status-value { font-size: 1.25rem; line-height: 1.2; }
+.welcome-status-detail { font-size: 0.75rem; line-height: 1.4; opacity: 0.8; }
+.welcome-content { min-width: 0; }
+.welcome-lead {
+  max-width: 28rem;
+  margin: 1rem auto 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+.welcome-launcher { margin-top: 1.5rem; }
+/* Paw prints between the status cards and the launcher — only in the scrolling portrait layout. */
+.welcome-paw-trail {
+  display: none;
+  position: relative;
+  width: 100%;
+  max-width: 36rem;
+  margin-inline: auto;
+  container-type: size;
+}
+.welcome-paw {
+  position: absolute;
+  width: clamp(0.875rem, 30cqh, 1.75rem);
+  height: auto;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) rotate(var(--paw-rot));
+  opacity: 0;
+  animation: welcome-paw-step 4.5s var(--ease-standard) var(--paw-delay) infinite;
+}
+@keyframes welcome-paw-step {
+  0% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--paw-rot)) scale(0.6); }
+  8% { opacity: 0.85; transform: translate(-50%, -50%) rotate(var(--paw-rot)) scale(1); }
+  55% { opacity: 0.85; }
+  80%, 100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--paw-rot)) scale(1); }
+}
+body:has(.module-sheet[open]) .welcome-paw { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .welcome-paw { animation: none; opacity: 0.7; }
+}
+.welcome-launcher-title { margin-bottom: 0.75rem; }
+.welcome-settings { margin-top: 0.75rem; }
+.welcome-contact-button {
+  display: inline-flex;
+  height: 2.5rem;
+  gap: 0.5rem;
+  padding-inline: 1.25rem;
+}
+.hero-cat-image {
+  opacity: 0;
+  transition: opacity var(--motion-medium) var(--ease-standard);
+}
+.hero-cat-image[data-selected="true"] { opacity: 1; }
+.hero-cat-image { transform-origin: 50% 100%; }
+/* Optical fit of the red cat's artwork (kot-hero-drugi.svg), which belongs to Odin. */
+.hero-cat-image[data-hero-cat="male"] { transform: translateX(-10px) scale(0.95); }
+.welcome-module-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.625rem;
+}
+/* the last module spans the row; the Kontakt tile after it only exists in the 3-column grid */
+.welcome-module-grid > li:has(+ .welcome-module-contact) { grid-column: 1 / -1; }
+.welcome-module-contact { display: none; }
+
+@media (max-width: 767px) and (orientation: portrait) {
+  .welcome-credit { left: 0; right: 0; text-align: center; }
+  .welcome-layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem calc(1.25rem + env(safe-area-inset-bottom, 0px));
+  }
+  .welcome-art .hero-stage {
+    width: auto;
+    height: min(calc(100% - 7.5rem), 42dvh, 80vw);
+  }
+  .welcome-content h1 { font-size: 2rem; line-height: 1.2; }
+  .welcome-lead { margin-top: 0.5rem; font-size: 0.8125rem; line-height: 1.5; }
+  .welcome-launcher { margin-top: 1rem; }
+  .module-launcher { min-height: 3.5rem; padding: 0.625rem; gap: 0.5rem; }
+}
+
+@media (max-width: 767px) and (orientation: portrait) and (max-height: 900px) {
+  .module-launcher-description { display: none; }
+  .module-launcher { min-height: 2.75rem; }
+  .welcome-cattery-status { margin-top: 0.75rem; }
+  .welcome-status-card { padding: 0.625rem 0.75rem; gap: 0.125rem; }
+  .welcome-status-value { font-size: 1rem; }
+  .welcome-status-label { font-size: 0.625rem; gap: 0.375rem; }
+  .welcome-status-label svg { width: 0.75rem; height: 0.75rem; }
+  .welcome-status-detail { font-size: 0.625rem; }
+}
+
+@media (max-height: 700px) {
+  .welcome-lead { display: none; }
+  .welcome-launcher { margin-top: 0.75rem; }
+  .module-launcher-description { display: none; }
+  .module-launcher { min-height: 2.75rem; padding: 0.625rem; }
+}
+
+@media (max-width: 767px) and (orientation: portrait) and (max-height: 700px) {
+  .welcome-module-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.375rem; }
+  .welcome-module-grid > li:has(+ .welcome-module-contact) { grid-column: auto; }
+  .welcome-module-contact { display: block; }
+  .welcome-contact-button { display: none; }
+  .module-launcher { justify-content: center; padding: 0.375rem; text-align: center; }
+  .module-launcher > svg { display: none; }
+  .module-launcher-label { font-size: 0.75rem; line-height: 1.2; }
+  .welcome-launcher-title { margin-bottom: 0.5rem; }
+  .welcome-status-label { display: none; }
+  .welcome-status-card { padding: 0.375rem 0.75rem; gap: 0; }
+  .welcome-art .hero-stage { height: min(calc(100% - 6.5rem), 42dvh, 80vw); }
+}
+
+@media (max-width: 767px) and (orientation: portrait) and (max-height: 600px) {
+  .welcome-content h1 { font-size: 1.75rem; }
+  .module-launcher { min-height: 2.25rem; }
+  .welcome-launcher-title { font-size: 0.625rem; }
+  .welcome-settings { margin-top: 0.5rem; }
+}
+
+@media (max-height: 450px) {
+  .welcome-layout { padding: 0.5rem 1rem; gap: 1rem; }
+  .welcome-content h1 { font-size: 1.5rem; line-height: 1.15; }
+  .welcome-launcher { margin-top: 0.5rem; }
+  .welcome-launcher-title { margin-bottom: 0.5rem; font-size: 0.625rem; }
+  .welcome-module-grid { gap: 0.375rem; }
+  .module-launcher { min-height: 2.25rem; padding: 0.375rem 0.625rem; gap: 0.5rem; }
+  .module-launcher-label { font-size: 0.75rem; line-height: 1.2; }
+  .module-launcher > svg { width: 1rem; height: 1rem; }
+  .module-launcher { min-height: 2rem; }
+  .welcome-cattery-status { margin-top: 0.375rem; }
+  .welcome-status-card { padding: 0.25rem 0.5rem; gap: 0; }
+  .welcome-status-label { display: none; }
+  .welcome-status-value { font-size: 0.75rem; line-height: 1.3; }
+  .welcome-status-detail { font-size: 0.5625rem; line-height: 1.2; }
+  .welcome-settings { margin-top: 0.5rem; }
+}
+
+/* Mobile/tablet portrait: cat + gender toggle + title fill the first screen; the rest scrolls. */
+@media (max-width: 1023px) and (orientation: portrait) {
+  .welcome-screen { height: auto; min-height: calc(100dvh - var(--header-h)); overflow: visible; }
+  .welcome-layout {
+    --welcome-pad: 1.25rem;
+    --welcome-title-h: calc((100vw - 2 * var(--welcome-pad)) / 6.9 * 1.15);
+    --welcome-brand-h: calc(var(--welcome-title-h) + 4.25rem);
+    --welcome-art-extra: 5.4rem; /* caption + gender toggle under the stage */
+    --welcome-status-gap: 0.75rem;
+    --welcome-status-card-h: 6.5rem;
+    --welcome-status-h: calc(var(--welcome-status-card-h) + var(--welcome-status-gap)); /* cattery status cards under the title */
+    --welcome-paw-min: 2.5rem; /* the paw trail between the status cards and the launcher */
+    /* Gaps scale with the screen height so cat + toggle + title always fit on the first screen. */
+    --welcome-brand-gap: clamp(0.5rem, 2dvh, 100px); /* space between the gender toggle and the title */
+    --welcome-screen-h: calc(100dvh - var(--header-h));
+    --welcome-top: clamp(0.75rem, 4dvh, 100px); /* space above the cat */
+    --welcome-stage: min(
+      calc(100vw - 2 * var(--welcome-pad)),
+      48.75rem,
+      calc(var(--welcome-screen-h) - var(--welcome-top) - var(--welcome-art-extra) - var(--welcome-brand-gap) - var(--welcome-brand-h) - var(--welcome-status-h) - 1rem)
+    );
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 0;
+    height: auto;
+    padding: var(--welcome-top) var(--welcome-pad) 1.5rem;
+  }
+  /* Tablets have the room: the paw trail gets real breathing space above and below. */
+  @media (min-width: 600px) {
+    .welcome-layout { --welcome-paw-min: 6rem; }
+  }
+  /* Short screens hide the status labels, so the cards are much lower. */
+  @media (max-height: 700px) {
+    .welcome-layout { --welcome-status-card-h: 3rem; }
+  }
+  .welcome-content { display: contents; }
+  .welcome-art { height: auto; justify-content: flex-start; }
+  .welcome-art .hero-stage { width: auto; height: var(--welcome-stage); }
+  .welcome-brand { margin-top: var(--welcome-brand-gap); }
+  .welcome-layout .welcome-lead { display: block; max-width: 36rem; }
+  .welcome-layout .welcome-cattery-status { margin-top: var(--welcome-status-gap); }
+  /* The launcher starts below the first screen, at least 2.5rem under the status cards;
+     a paw trail fills that gap. */
+  .welcome-paw-trail {
+    display: block;
+    height: max(var(--welcome-paw-min), calc(var(--welcome-screen-h) - var(--welcome-top) - var(--welcome-stage) - var(--welcome-art-extra) - var(--welcome-brand-gap) - var(--welcome-brand-h) - var(--welcome-status-h)));
+  }
+  .welcome-layout .welcome-launcher { margin-top: 0; }
+  .welcome-cattery-status, .welcome-launcher { width: 100%; max-width: 36rem; margin-inline: auto; }
+  .welcome-credit, .welcome-socials { display: none; } /* the footer below carries them here */
+}
+
+@property --reveal-r {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@layer base {
+  /* Bez sierot: przeglądarka nie zostawia jednego słowa w ostatnim wierszu akapitu. */
+  p, li, figcaption, h1, h2, h3 { text-wrap: pretty; }
+  :root {
+    --motion-short: 200ms;
+    --motion-medium: 300ms;
+    --motion-long: 500ms;
+    /* rozlanie kropli — wolniej niż reszta, bo rozmyte czoło potrzebuje drogi */
+    --motion-reveal: 750ms;
+    --motion-reveal-exit: 240ms;
+    --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --ease-exit: cubic-bezier(0.3, 0, 0.8, 0.15);
+    /* bez overshootu — referencyjne przejście widoku też jedzie czystym ease-pixel */
+    --ease-liquid: cubic-bezier(0.2, 0, 0, 1);
+    --ease-spring-soft: cubic-bezier(0.22, 1.18, 0.36, 1);
+    --header-h: 0rem;
+
+    /* Material 3 light color scheme — the female cat (plum). The male cat swaps the whole
+       palette below; every UI colour comes from these tokens, so it all follows the cat. */
+    --md-primary: 128 72 124;
+    --md-on-primary: 255 255 255;
+    --md-primary-container: 238 211 238;
+    --md-on-primary-container: 52 16 52;
+
+    --md-secondary: 110 88 106;
+    --md-on-secondary: 255 255 255;
+    --md-secondary-container: 242 222 240;
+    --md-on-secondary-container: 39 22 37;
+
+    --md-tertiary: 130 82 72;
+    --md-on-tertiary: 255 255 255;
+    --md-tertiary-container: 255 218 210;
+    --md-on-tertiary-container: 51 17 11;
+
+    --md-surface: 252 246 247;
+    --md-on-surface: 32 26 31;
+    --md-on-surface-variant: 79 68 77;
+    --md-outline: 128 116 125;
+    --md-outline-variant: 210 194 205;
+    --md-surface-container-lowest: 255 255 255;
+    --md-surface-container-low: 249 241 243;
+    --md-surface-container: 244 235 238;
+    --md-surface-container-high: 238 228 232;
+    --md-surface-container-highest: 232 222 226;
+
+    --md-cookie-button: 238 211 238;
+    --md-cookie-button-high: 246 230 246;
+    --md-cookie-button-hover: 223 194 223;
+
+    /* Material 3 shape scale. */
+    --md-shape-none: 0px;
+    --md-shape-xs: 4px;
+    --md-shape-sm: 8px;
+    --md-shape-md: 12px;
+    --md-shape-lg: 16px;
+    --md-shape-xl: 28px;
+    --md-shape-full: 9999px;
+  }
+
+  .dark {
+    /* Material 3 dark color scheme — female cat. */
+    --md-primary: 240 176 232;
+    --md-on-primary: 76 26 74;
+    --md-primary-container: 102 63 100;
+    --md-on-primary-container: 255 214 246;
+
+    --md-secondary: 216 191 211;
+    --md-on-secondary: 60 43 58;
+    --md-secondary-container: 91 69 89;
+    --md-on-secondary-container: 245 219 239;
+
+    --md-tertiary: 245 184 168;
+    --md-on-tertiary: 76 38 28;
+    --md-tertiary-container: 103 59 49;
+    --md-on-tertiary-container: 255 218 210;
+
+    --md-surface: 24 17 23;
+    --md-on-surface: 237 223 232;
+    --md-on-surface-variant: 210 194 205;
+    --md-outline: 154 141 151;
+    --md-outline-variant: 79 68 77;
+    --md-surface-container-lowest: 18 12 17;
+    --md-surface-container-low: 33 26 31;
+    --md-surface-container: 37 30 35;
+    --md-surface-container-high: 48 40 46;
+    --md-surface-container-highest: 59 51 57;
+
+    --md-cookie-button: 102 63 100;
+    --md-cookie-button-high: 85 52 83;
+    --md-cookie-button-hover: 120 77 117;
+  }
+
+  /* Male cat: a blue palette. */
+  html[data-gender-theme="male"] {
+    --md-primary: 52 97 142;
+    --md-on-primary: 255 255 255;
+    --md-primary-container: 205 226 255;
+    --md-on-primary-container: 0 29 52;
+
+    --md-secondary: 82 96 113;
+    --md-on-secondary: 255 255 255;
+    --md-secondary-container: 216 232 255;
+    --md-on-secondary-container: 14 29 44;
+
+    --md-tertiary: 105 88 121;
+    --md-on-tertiary: 255 255 255;
+    --md-tertiary-container: 240 219 255;
+    --md-on-tertiary-container: 35 21 51;
+
+    --md-surface: 247 249 255;
+    --md-on-surface: 25 28 32;
+    --md-on-surface-variant: 66 71 78;
+    --md-outline: 115 119 127;
+    --md-outline-variant: 194 199 207;
+    --md-surface-container-lowest: 255 255 255;
+    --md-surface-container-low: 241 244 250;
+    --md-surface-container: 235 238 244;
+    --md-surface-container-high: 229 232 238;
+    --md-surface-container-highest: 224 226 233;
+
+    --md-cookie-button: 205 226 255;
+    --md-cookie-button-high: 222 236 255;
+    --md-cookie-button-hover: 184 210 247;
+  }
+
+  html.dark[data-gender-theme="male"] {
+    --md-primary: 159 202 252;
+    --md-on-primary: 0 50 88;
+    --md-primary-container: 56 91 125;
+    --md-on-primary-container: 209 228 255;
+
+    --md-secondary: 186 200 218;
+    --md-on-secondary: 36 50 64;
+    --md-secondary-container: 55 78 105;
+    --md-on-secondary-container: 214 228 247;
+
+    --md-tertiary: 213 190 229;
+    --md-on-tertiary: 58 42 73;
+    --md-tertiary-container: 81 64 97;
+    --md-on-tertiary-container: 240 219 255;
+
+    --md-surface: 16 20 24;
+    --md-on-surface: 224 226 232;
+    --md-on-surface-variant: 194 199 207;
+    --md-outline: 140 145 153;
+    --md-outline-variant: 66 71 78;
+    --md-surface-container-lowest: 11 15 19;
+    --md-surface-container-low: 24 28 32;
+    --md-surface-container: 28 32 36;
+    --md-surface-container-high: 39 42 47;
+    --md-surface-container-highest: 50 53 58;
+
+    --md-cookie-button: 56 91 125;
+    --md-cookie-button-high: 48 77 105;
+    --md-cookie-button-hover: 68 106 142;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  section {
+    scroll-margin-top: calc(var(--header-h) + 1rem);
+  }
+
+  body {
+    background-color: rgb(var(--md-surface));
+    color: rgb(var(--md-on-surface));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s var(--ease-standard),
+      color 0.3s var(--ease-standard);
+  }
+
+  ::selection {
+    background-color: rgb(var(--md-secondary-container));
+    color: rgb(var(--md-on-secondary-container));
+  }
+}
+
+@layer components {
+  .m3-display-small {
+    font: 400 36px/44px var(--font-albert-sans), system-ui, sans-serif;
+  }
+
+  .m3-display-medium {
+    font: 400 45px/52px var(--font-albert-sans), system-ui, sans-serif;
+  }
+
+  .m3-display-large {
+    font: 400 57px/64px var(--font-albert-sans), system-ui, sans-serif;
+  }
+
+  .m3-display-responsive {
+    font: 400 36px/44px var(--font-albert-sans), system-ui, sans-serif;
+  }
+
+  @media (min-width: 640px) {
+    .m3-display-responsive {
+      font-size: 45px;
+      line-height: 52px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .m3-display-responsive {
+      font-size: 57px;
+      line-height: 64px;
+    }
+  }
+
+  .m3-headline-large {
+    font: 400 32px/40px var(--font-albert-sans), system-ui, sans-serif;
+  }
+
+  .m3-headline-medium {
+    font: 400 28px/36px var(--font-albert-sans), system-ui, sans-serif;
+  }
+
+  .m3-headline-small {
+    font: 400 24px/32px var(--font-albert-sans), system-ui, sans-serif;
+  }
+
+  .m3-title-large {
+    font: 400 22px/28px var(--font-albert-sans), system-ui, sans-serif;
+  }
+
+  .m3-title-medium {
+    font: 500 16px/24px var(--font-albert-sans), system-ui, sans-serif;
+    letter-spacing: 0.15px;
+  }
+
+  .m3-title-small {
+    font: 500 14px/20px var(--font-albert-sans), system-ui, sans-serif;
+    letter-spacing: 0.1px;
+  }
+
+  .m3-body-large {
+    font: 400 16px/24px var(--font-albert-sans), system-ui, sans-serif;
+    letter-spacing: 0.5px;
+  }
+
+  .m3-body-medium {
+    font: 400 14px/20px var(--font-albert-sans), system-ui, sans-serif;
+    letter-spacing: 0.25px;
+  }
+
+  .m3-body-small {
+    font: 400 12px/16px var(--font-albert-sans), system-ui, sans-serif;
+    letter-spacing: 0.4px;
+  }
+
+  .m3-label-large {
+    font: 500 14px/20px var(--font-albert-sans), system-ui, sans-serif;
+    letter-spacing: 0.1px;
+  }
+
+  .m3-label-medium {
+    font: 500 12px/16px var(--font-albert-sans), system-ui, sans-serif;
+    letter-spacing: 0.5px;
+  }
+
+  .m3-label-small {
+    font: 500 11px/16px var(--font-albert-sans), system-ui, sans-serif;
+    letter-spacing: 0.5px;
+  }
+
+  .m3-interactive,
+  .state-layer,
+  .pill-hover,
+  .icon-button,
+  .pill {
+    position: relative;
+    isolation: isolate;
+    outline: none;
+  }
+
+  .m3-interactive::after,
+  .state-layer::after,
+  .pill-hover::after,
+  .icon-button::after,
+  .pill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: currentColor;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms var(--ease-standard);
+  }
+
+  .m3-interactive:hover::after,
+  .state-layer:hover::after,
+  .pill-hover:hover::after,
+  .icon-button:hover::after,
+  .pill:hover::after {
+    opacity: 0.08;
+  }
+
+  .m3-interactive:focus-visible::after,
+  .state-layer:focus-visible::after,
+  .pill-hover:focus-visible::after,
+  .icon-button:focus-visible::after,
+  .pill:focus-visible::after {
+    opacity: 0.1;
+  }
+
+  .m3-interactive:active::after,
+  .state-layer:active::after,
+  .pill-hover:active::after,
+  .icon-button:active::after,
+  .pill:active::after {
+    opacity: 0.12;
+  }
+
+  .m3-interactive:focus-visible,
+  .state-layer:focus-visible,
+  .pill-hover:focus-visible,
+  .icon-button:focus-visible,
+  .pill:focus-visible {
+    outline: 3px solid rgb(var(--md-primary));
+    outline-offset: 2px;
+  }
+
+  .pill {
+    min-height: 2.5rem;
+    border-radius: var(--md-shape-full);
+    padding: 0.5rem 1.5rem;
+    letter-spacing: 0.1px;
+    transition:
+      color var(--motion-short) var(--ease-standard),
+      background-color var(--motion-short) var(--ease-standard);
+  }
+
+  .content-panel-shell {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .content-panel-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background-color: rgb(var(--md-surface-container));
+    clip-path: circle(160% at 0 0);
+    transition:
+      clip-path var(--motion-long) var(--ease-standard),
+      border-radius var(--motion-long) var(--ease-standard);
+  }
+
+  .content-panel-shell:has(
+      [role="tabpanel"][aria-hidden="false"] [data-panel-view="text"]
+    ) {
+    padding: 0;
+    border-radius: 0;
+    background-color: transparent;
+  }
+
+  .content-panel-shell:has(
+      [role="tabpanel"][aria-hidden="false"] [data-panel-view="text"]
+    )::before {
+    clip-path: circle(0% at 0 0);
+  }
+
+  .icon-button {
+    display: grid;
+    height: 2.5rem;
+    width: 2.5rem;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: var(--md-shape-full);
+    background-color: rgb(var(--md-cookie-button-high));
+    color: rgb(var(--md-on-surface));
+    transition:
+      color var(--motion-short) var(--ease-standard),
+      background-color var(--motion-short) var(--ease-standard);
+    position: relative;
+    isolation: isolate;
+  }
+
+  /*
+   * Czoło cieczy. Stały feather 28px przy dużym kole czytał się jak twarda
+   * krawędź — im większy promień, tym mniejszy udział rozmycia w obwodzie.
+   * Teraz feather rośnie razem z promieniem (35%), z dolnym i górnym progiem,
+   * a zbocze ma kilka przystanków alfy zamiast jednego liniowego skoku — stąd
+   * miękkie, rozmyte czoło aż do końca animacji.
+   *
+   * Górny próg 160px jest celowy: JS dodaje do promienia docelowego większy
+   * zapas (REVEAL_FEATHER_MAX), więc w spoczynku nieprzezroczysty rdzeń maski
+   * przykrywa cały panel i nic nie zostaje półprzezroczyste.
+   */
+  .liquid-reveal {
+    position: relative;
+    --reveal-feather: clamp(64px, calc(var(--reveal-r) * 0.35), 160px);
+    -webkit-mask-image: radial-gradient(
+      circle at var(--reveal-x) var(--reveal-y),
+      rgb(0 0 0 / 1) calc(var(--reveal-r) - var(--reveal-feather)),
+      rgb(0 0 0 / 0.86) calc(var(--reveal-r) - var(--reveal-feather) * 0.72),
+      rgb(0 0 0 / 0.5) calc(var(--reveal-r) - var(--reveal-feather) * 0.42),
+      rgb(0 0 0 / 0.16) calc(var(--reveal-r) - var(--reveal-feather) * 0.18),
+      rgb(0 0 0 / 0) var(--reveal-r)
+    );
+    mask-image: radial-gradient(
+      circle at var(--reveal-x) var(--reveal-y),
+      rgb(0 0 0 / 1) calc(var(--reveal-r) - var(--reveal-feather)),
+      rgb(0 0 0 / 0.86) calc(var(--reveal-r) - var(--reveal-feather) * 0.72),
+      rgb(0 0 0 / 0.5) calc(var(--reveal-r) - var(--reveal-feather) * 0.42),
+      rgb(0 0 0 / 0.16) calc(var(--reveal-r) - var(--reveal-feather) * 0.18),
+      rgb(0 0 0 / 0) var(--reveal-r)
+    );
+    transition: --reveal-r var(--motion-reveal) var(--ease-liquid);
+  }
+
+  /*
+   * Menisk tylko na czas ruchu — poza animacją pierścień potrafił zostawić
+   * widoczny łuk w narożniku. Pasmo jedzie na tym samym featherze co maska,
+   * żeby połysk siedział dokładnie na rozmytym czole, a nie za nim.
+   */
+  .liquid-reveal-animating::after {
+    --reveal-r: inherit;
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(
+      circle at var(--reveal-x) var(--reveal-y),
+      transparent calc(var(--reveal-r) - var(--reveal-feather)),
+      rgb(var(--md-primary-container) / 0.22) calc(var(--reveal-r) - var(--reveal-feather) * 0.45),
+      transparent var(--reveal-r)
+    );
+  }
+
+  .dark .liquid-reveal-animating::after {
+    background: radial-gradient(
+      circle at var(--reveal-x) var(--reveal-y),
+      transparent calc(var(--reveal-r) - var(--reveal-feather)),
+      rgb(var(--md-primary) / 0.11) calc(var(--reveal-r) - var(--reveal-feather) * 0.45),
+      transparent var(--reveal-r)
+    );
+  }
+
+  .liquid-reveal-animating {
+    will-change: mask-image;
+  }
+
+  .liquid-reveal-exiting {
+    transition-duration: var(--motion-reveal-exit);
+    transition-timing-function: var(--ease-exit);
+    transition-delay: 0ms;
+  }
+
+}
+
+/* Poza warstwami Tailwinda: kanał maski nie może zostać nadpisany przez
+   utility transition-[grid-template-rows] używane do animacji wysokości. */
+.liquid-reveal {
+  transition: --reveal-r var(--motion-reveal) var(--ease-liquid);
+}
+
+/* promień, wysokość i krycie na jednym zegarze — inaczej maska i layout się rozjeżdżają */
+.control-panel-reveal.liquid-reveal {
+  transition:
+    --reveal-r var(--motion-reveal) var(--ease-liquid),
+    grid-template-rows var(--motion-reveal) var(--ease-standard),
+    opacity var(--motion-reveal) var(--ease-standard);
+}
+
+.liquid-reveal-exiting {
+  transition: --reveal-r var(--motion-reveal-exit) var(--ease-exit);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .liquid-reveal {
+    transition: none !important;
+  }
+
+  .liquid-reveal-animating::after {
+    display: none;
+  }
+
+}
+
+@supports not ((mask-image: radial-gradient(black, transparent)) or (-webkit-mask-image: radial-gradient(black, transparent))) {
+  .liquid-reveal {
+    clip-path: circle(
+      var(--reveal-r) at var(--reveal-x) var(--reveal-y)
+    );
+    transition: clip-path var(--motion-reveal) var(--ease-liquid);
+  }
+
+  .liquid-reveal-exiting {
+    transition-duration: var(--motion-reveal-exit);
+    transition-timing-function: var(--ease-exit);
+    transition-delay: 0ms;
+  }
+
+  .liquid-reveal::after {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .liquid-reveal {
+      transition: none !important;
+    }
+  }
+}
+
+/* Pasek scrubbera wjeżdża lekkim rozciągnięciem — „budzi się" przy pojawieniu. */
+@keyframes scrub-intro {
+  0% {
+    opacity: 0;
+    transform: scale(0.96, 0.72);
+  }
+  62% {
+    opacity: 1;
+    transform: scale(1.004, 1.035);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+.scrub-bar {
+  animation: scrub-intro var(--motion-long) var(--ease-standard) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrub-bar {
+    animation: none;
+  }
+}
+
+@keyframes slider-icon-react {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  38% {
+    transform: translateX(2px) rotate(4deg);
+  }
+  72% {
+    transform: translateX(-1px) rotate(-2deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+@keyframes view-toggle-react {
+  0% {
+    transform: scaleX(0.99);
+  }
+  52% {
+    transform: scaleX(1.02);
+  }
+  76% {
+    transform: scaleX(0.996);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.view-toggle-react,
+.control-tab-react {
+  animation: view-toggle-react var(--motion-medium) var(--ease-spring-soft);
+  transform-origin: center;
+}
+
+.slider-icon-react {
+  animation: slider-icon-react var(--motion-medium) var(--ease-standard);
+  transform-origin: center;
+}
+
+/* ===================== Hero: kot + kształty M3 Expressive ===================== */
+
+/*
+ * Paleta wyciągnięta z grafiki kota (#42352a / #ab947c), tak jak robi to
+ * dynamic color w M3. Podłoże (base) jest kremowe w obu motywach: białe futro
+ * w grafice to przezroczystość, więc kot musi zawsze stać na jasnym kształcie.
+ */
+:root {
+  --hero-tone-base: 241 231 218;
+  --hero-tone-1: 196 170 140;
+  --hero-tone-2: 160 128 98;
+  --hero-tone-3: 196 122 88;
+  --hero-tone-4: 176 150 120;
+}
+
+.dark {
+  --hero-tone-base: 233 221 204;
+  --hero-tone-1: 86 70 56;
+  --hero-tone-2: 110 90 71;
+  --hero-tone-3: 125 78 60;
+  --hero-tone-4: 70 58 47;
+}
+
+.hero-stage {
+  position: relative;
+  width: min(92vw, 44rem);
+  aspect-ratio: 1;
+  /* cqw = 1% szerokości sceny — kształty wiedzą, gdzie jest jej środek */
+  container-type: inline-size;
+}
+
+.hero-tone-base { color: rgb(var(--hero-tone-base)); }
+.hero-tone-1 { color: rgb(var(--hero-tone-1)); }
+.hero-tone-2 { color: rgb(var(--hero-tone-2)); }
+.hero-tone-3 { color: rgb(var(--hero-tone-3)); }
+.hero-tone-4 { color: rgb(var(--hero-tone-4)); }
+
+.hero-shape {
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(var(--rot));
+  /* wychodzą zza kota: startują z jego środka, małe, i rozkładają się na boki */
+  animation: hero-shape-in 900ms var(--ease-spring-soft) var(--delay) both;
+}
+
+/* Move a small outer layer; keep the existing entrance and blur on the child. */
+.hero-shape-anchor {
+  position: absolute;
+}
+.hero-shape-anchor > .hero-shape {
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 100%;
+}
+.hero-shape-float {
+  animation: hero-shape-float var(--float-duration) ease-in-out var(--float-start) infinite;
+}
+.hero-shape-float:nth-child(even) { animation-direction: reverse; }
+body:has(.module-sheet[open]) .hero-shape-float,
+.hero-stage[data-float-paused="true"] .hero-shape-float {
+  animation-play-state: paused;
+}
+
+@keyframes hero-shape-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  35% { transform: translate3d(3px, -6px, 0); }
+  70% { transform: translate3d(-2px, 3px, 0); }
+}
+
+/* warstwy: podłoże (0) → kształty za kotem (1) → kot (2) → kształty przed kotem (3) */
+.hero-shape-base { z-index: 0; }
+.hero-shape-back { z-index: 1; }
+.hero-shape-front { z-index: 3; }
+
+/*
+ * Rozmycie ruchu. Wrapper kształtu jest obrócony w kierunku „ucieczki" od kota,
+ * a filtr rozmywa tylko wzdłuż jego lokalnej osi X — więc smuga zawsze leci
+ * promieniście od kota, niezależnie od tego, jak obrócony jest sam kształt.
+ */
+.hero-mblur-soft { filter: url(#hero-mblur-soft); }
+.hero-mblur-strong { filter: url(#hero-mblur-strong); }
+
+.hero-filters {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.hero-shape-orient {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-shape-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.hero-shape-pill {
+  border-radius: 9999px;
+  background: currentColor;
+}
+
+.hero-shape-arch {
+  border-radius: 9999px 9999px 1.25rem 1.25rem;
+  background: currentColor;
+}
+
+.hero-shape-spin {
+  animation: hero-shape-spin 60s linear infinite;
+}
+
+.hero-cat {
+  position: absolute;
+  left: 50%;
+  bottom: 9%;
+  z-index: 2;
+  height: 84%;
+  transform: translateX(-50%);
+  animation: hero-cat-in 700ms var(--ease-standard) 60ms both;
+}
+
+@keyframes hero-shape-in {
+  from {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--from-x)), calc(-50% + var(--from-y)))
+      rotate(calc(var(--rot) - 45deg)) scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--rot)) scale(1);
+  }
+}
+
+@keyframes hero-shape-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes hero-cat-in {
+  from { opacity: 0; transform: translate(-50%, 1.5rem); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* globalna reguła skraca czasy do 0.01ms — przy pętli infinite dałoby to
+   szaleńcze wirowanie, więc ruch w hero wyłączamy jawnie */
+@media (prefers-reduced-motion: reduce) {
+  .hero-shape,
+  .hero-shape-float,
+  .hero-shape-spin,
+  .hero-cat {
+    animation: none !important;
+  }
+}

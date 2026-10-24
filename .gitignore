@@ -1,0 +1,22 @@
+node_modules
+.next
+out
+build
+.DS_Store
+*.pem
+npm-debug.log*
+.env*.local
+next-env.d.ts
+.vercel
+*.tsbuildinfo
+
+# local tooling, logs and caches
+*.log
+.next-corrupt-*/
+.playwright-cli/
+output/
+backup/
+.claude/
+
+# full-resolution photo originals (78 MB); the site uses the WebP copies in public/photos
+zrodla-zdjec/
