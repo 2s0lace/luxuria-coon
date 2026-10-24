@@ -429,15 +429,16 @@ export default function Carousel({ slides, fill = false }: { slides: Slide[]; fi
         >
           <ChevronLeft className="h-5 w-5" strokeWidth={2} aria-hidden />
         </button>
-        <ul className="flex items-center justify-center">
+        {/* Kropki dzielą to, co zostaje między strzałkami — na wąskim telefonie się zwężają, zamiast wypychać strzałkę. */}
+        <ul className="flex min-w-0 flex-1 items-center justify-center">
           {Array.from({ length: pageCount }, (_, i) => (
-            <li key={i}>
+            <li key={i} className="min-w-0 max-w-8 flex-1 sm:max-w-12">
               <button
                 type="button"
                 onClick={() => setPage(i)}
                 aria-label={t.carousel.goToPage(i + 1)}
                 aria-current={i === page ? "true" : undefined}
-                className="m3-interactive grid h-12 w-8 place-items-center rounded-m3-full sm:w-12 sm:p-3"
+                className="m3-interactive grid h-12 w-full place-items-center rounded-m3-full sm:p-3"
               >
                 <span
                   aria-hidden
